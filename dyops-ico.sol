@@ -900,8 +900,12 @@ contract DYOPS_ICO is Crowdsale, CappedCrowdsale, TimedCrowdsale {
 
     function _processPurchase(address beneficiary, uint256 tokenAmount) internal {
         // here we create mapping for csvs
-        userPurchases[beneficiary] = tokenAmount;
-        users.push(beneficiary);
+        if(userPurchases[beneficiary] == 0) {
+            users.push(beneficiary);
+        }
+        
+        userPurchases[beneficiary] = userPurchases[beneficiary].add(tokenAmount);
+        
     }
 
     function getUsersPurchases() public view returns (address[] memory, uint256[] memory) {
